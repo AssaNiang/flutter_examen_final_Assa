@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_examen1/components/config.dart';
+import 'package:flutter_examen1/pages/departements_page.dart';
 import 'package:yaml/yaml.dart';
 
 class SearchBarApp extends StatefulWidget {
@@ -53,6 +54,10 @@ class _SearchBarAppState extends State<SearchBarApp> {
   void updateSearchQuery(value) {
     _searchController.text = value;
   }
+
+  String getCode(value){
+    return widget.config.get('regions.$value.code');
+  }
   
 
   void setRegions(YamlMap regions) {
@@ -89,7 +94,11 @@ class _SearchBarAppState extends State<SearchBarApp> {
                       EdgeInsets.symmetric(horizontal: 16.0)),
                   onSubmitted: (value) {
                     // print("Submitting $value");
+                    String regionCode = getCode(value);
                     print(value);
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => DepartementPage(regionCode: regionCode)),
+                    );
                   },
                   onChanged: (value) {
                     search(value);
@@ -184,7 +193,11 @@ class _SearchBarAppState extends State<SearchBarApp> {
                   return GestureDetector(
                     onTapDown: (detail) {
                       updateSearchQuery(searchresults[index]);
+                      searchBarHasFocus.requestFocus();  // Demander le focus à la searchBar
+                      search(_searchController.text);  // Filtrer la liste avec le contenu actuel de la searchBar
+                      
                     },
+                    
                     child: Container(
                       decoration:  const BoxDecoration(
                         border: Border( // Bordure supérieure
