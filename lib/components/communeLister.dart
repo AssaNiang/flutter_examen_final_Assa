@@ -44,7 +44,7 @@ class _CommuneListerState extends State<CommuneLister> {
                 child: Card(
                   // Vous pouvez personnaliser les propriétés de la carte ici
                   child: ListTile(
-                    title: Text("$commune.nom"),
+                    title: Text("${commune.nom}"),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
